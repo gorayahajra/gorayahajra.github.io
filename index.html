@@ -1,1043 +1,259 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hajra — Financial Data Analyst</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #f7f6f2;
-        --white: #fff;
-        --dark: #0b1221;
-        --amber: #e89b20;
-        --amber-l: #fef3c7;
-        --blue: #1a47b8;
-        --blue-l: #eff4ff;
-        --text: #111827;
-        --mid: #374151;
-        --muted: #6b7280;
-        --border: #e5e7eb;
-        --font: "Outfit", sans-serif;
-        --mono: "JetBrains Mono", monospace;
-      }
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: var(--font);
-        line-height: 1.6;
-        overflow-x: hidden;
-      }
-      a:focus-visible,
-      button:focus-visible {
-        outline: 2px solid var(--amber);
-        outline-offset: 2px;
-      }
-      nav {
-        position: fixed;
-        inset: 0 0 auto 0;
-        z-index: 200;
-        height: 64px;
-        background: rgba(247, 246, 242, 0.92);
-        backdrop-filter: blur(16px);
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 48px;
-      }
-      .logo {
-        font-family: var(--mono);
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--dark);
-        text-decoration: none;
-        letter-spacing: 0.06em;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .logo i {
-        width: 8px;
-        height: 8px;
-        background: var(--amber);
-        border-radius: 50%;
-      }
-      .nav-r {
-        display: flex;
-        align-items: center;
-        gap: 32px;
-      }
-      .nav-links {
-        display: flex;
-        gap: 32px;
-        list-style: none;
-      }
-      .nav-links a {
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--muted);
-        text-decoration: none;
-        transition: color 0.2s;
-      }
-      .nav-links a:hover {
-        color: var(--dark);
-      }
-      .nav-cv,
-      .btn {
-        padding: 10px 20px;
-        font: 700 12px var(--font);
-        letter-spacing: 0.04em;
-        text-decoration: none;
-        border: 1px solid var(--dark);
-        background: var(--dark);
-        color: #fff;
-        transition: all 0.2s;
-        display: inline-block;
-        cursor: pointer;
-      }
-      .nav-cv:hover {
-        background: var(--amber);
-        border-color: var(--amber);
-        color: #000;
-      }
-      #hero {
-        min-height: 100vh;
-        background: var(--dark);
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        align-items: center;
-        gap: 60px;
-        padding: 120px 48px 80px;
-        position: relative;
-        overflow: hidden;
-      }
-      #hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-            circle,
-            rgba(255, 255, 255, 0.06) 1px,
-            transparent 1px
-          )
-          0 0/36px 36px;
-      }
-      #hero::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(
-          90deg,
-          var(--amber),
-          #f59e0b 50%,
-          transparent
-        );
-      }
-      .hero-l,
-      .hero-r {
-        position: relative;
-        z-index: 1;
-      }
-      .tag {
-        display: inline-block;
-        padding: 6px 14px;
-        background: rgba(232, 155, 32, 0.12);
-        border: 1px solid rgba(232, 155, 32, 0.25);
-        font: 500 11px var(--mono);
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--amber);
-        margin-bottom: 28px;
-      }
-      .name {
-        font-size: clamp(56px, 7vw, 104px);
-        font-weight: 900;
-        line-height: 0.95;
-        letter-spacing: -0.03em;
-        color: #fff;
-        margin-bottom: 14px;
-      }
-      .name span {
-        color: var(--amber);
-      }
-      .role {
-        font-size: clamp(14px, 1.4vw, 18px);
-        color: rgba(255, 255, 255, 0.55);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 24px;
-      }
-      .desc {
-        font-size: 15px;
-        color: rgba(255, 255, 255, 0.75);
-        line-height: 1.75;
-        max-width: 560px;
-        margin-bottom: 36px;
-      }
-      .desc strong {
-        color: #fff;
-        font-weight: 600;
-      }
-      .btns {
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-      }
-      .btn-a {
-        background: var(--amber);
-        border-color: var(--amber);
-        color: #000;
-        padding: 13px 28px;
-      }
-      .btn-a:hover {
-        background: #fbbf24;
-        transform: translateY(-2px);
-      }
-      .btn-o {
-        background: transparent;
-        border-color: rgba(255, 255, 255, 0.25);
-        color: rgba(255, 255, 255, 0.85);
-        padding: 13px 28px;
-      }
-      .btn-o:hover {
-        border-color: #fff;
-        color: #fff;
-        transform: translateY(-2px);
-      }
-      .stats {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-      .stat {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 20px 22px;
-      }
-      .stat b {
-        display: block;
-        font: 700 28px var(--mono);
-        color: var(--amber);
-        line-height: 1;
-        margin-bottom: 6px;
-      }
-      .stat span {
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.45);
-      }
-      .hc {
-        display: block;
-        padding: 12px 16px;
-        margin-bottom: 8px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        color: rgba(255, 255, 255, 0.65);
-        text-decoration: none;
-        font: 11px var(--mono);
-        letter-spacing: 0.05em;
-        transition: all 0.2s;
-        overflow-wrap: anywhere;
-      }
-      .hc:hover {
-        color: #fff;
-        border-color: rgba(232, 155, 32, 0.3);
-      }
-      .sec {
-        padding: 100px 48px;
-      }
-      .sec.alt {
-        background: var(--white);
-      }
-      .eyebrow {
-        font: 500 11px var(--mono);
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--amber);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 14px;
-      }
-      .eyebrow::before {
-        content: "";
-        width: 28px;
-        height: 1px;
-        background: var(--amber);
-      }
-      h2.t {
-        font-size: clamp(30px, 4vw, 46px);
-        font-weight: 800;
-        letter-spacing: -0.025em;
-        line-height: 1.1;
-        margin-bottom: 16px;
-        color: var(--dark);
-      }
-      h2.t span {
-        color: var(--blue);
-      }
-      .about {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 72px;
-        align-items: start;
-      }
-      .prose {
-        font-size: 15px;
-        color: var(--mid);
-        line-height: 1.8;
-        margin-bottom: 18px;
-        max-width: 62ch;
-      }
-      .facts {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-top: 28px;
-      }
-      .fact {
-        padding: 16px 18px;
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-left: 3px solid var(--amber);
-      }
-      .fact small {
-        display: block;
-        font: 9px var(--mono);
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 4px;
-      }
-      .fact b {
-        font-size: 14px;
-        color: var(--dark);
-      }
-      .sk {
-        margin-bottom: 22px;
-      }
-      .sk h3 {
-        font: 700 10px var(--mono);
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--blue);
-        margin-bottom: 10px;
-        padding-bottom: 6px;
-        border-bottom: 1px solid var(--border);
-      }
-      .pills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px;
-      }
-      .pill {
-        padding: 5px 12px;
-        background: var(--white);
-        border: 1px solid var(--border);
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--mid);
-      }
-      .pill.hi {
-        border-color: rgba(26, 71, 184, 0.3);
-        color: var(--blue);
-        background: var(--blue-l);
-      }
-      .exp {
-        margin-top: 44px;
-      }
-      .job {
-        display: grid;
-        grid-template-columns: 220px 1fr;
-        gap: 40px;
-        padding: 34px 0;
-        border-top: 1px solid var(--border);
-      }
-      .job:last-child {
-        border-bottom: 1px solid var(--border);
-      }
-      .period {
-        font: 500 11px var(--mono);
-        color: var(--amber);
-        letter-spacing: 0.06em;
-        margin-bottom: 6px;
-      }
-      .org {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--dark);
-      }
-      .job h3 {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--dark);
-        letter-spacing: -0.01em;
-      }
-      .job ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-top: 12px;
-      }
-      .job li {
-        font-size: 14px;
-        color: var(--mid);
-        padding-left: 18px;
-        position: relative;
-        max-width: 70ch;
-      }
-      .job li::before {
-        content: "—";
-        position: absolute;
-        left: 0;
-        color: var(--amber);
-        font-weight: 700;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin-top: 40px;
-      }
-      .card {
-        background: var(--white);
-        border: 1px solid var(--border);
-        padding: 26px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        transition: border-color 0.2s;
-      }
-      .card:hover {
-        border-color: var(--amber);
-      }
-      .sec.alt .card {
-        background: var(--bg);
-      }
-      .top {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 8px;
-      }
-      .yr {
-        font: 10px var(--mono);
-        color: var(--muted);
-        letter-spacing: 0.1em;
-      }
-      .dom {
-        font: 700 9px var(--mono);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 3px 8px;
-        background: rgba(232, 155, 32, 0.12);
-        border: 1px solid rgba(232, 155, 32, 0.25);
-        color: #b45309;
-        text-align: right;
-      }
-      .dom.b {
-        background: var(--blue-l);
-        border-color: rgba(26, 71, 184, 0.2);
-        color: var(--blue);
-      }
-      .dom.g {
-        background: #f0fdf4;
-        border-color: rgba(16, 185, 129, 0.25);
-        color: #065f46;
-      }
-      .card h3 {
-        font-size: 17px;
-        font-weight: 700;
-        color: var(--dark);
-        line-height: 1.3;
-      }
-      .card p {
-        font-size: 13px;
-        color: var(--muted);
-        line-height: 1.65;
-        flex: 1;
-      }
-      .media {
-        display: inline-flex;
-        align-self: flex-start;
-        align-items: center;
-        gap: 6px;
-        padding: 7px 12px;
-        background: var(--white);
-        border: 1px solid var(--border);
-        font: 600 10.5px var(--mono);
-        color: var(--mid);
-        cursor: pointer;
-        transition: all 0.18s;
-        margin-top: 4px;
-      }
-      .media:hover {
-        border-color: var(--amber);
-        color: #b45309;
-        background: var(--amber-l);
-      }
-      .modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        z-index: 500;
-        background: rgba(7, 13, 25, 0.92);
-        align-items: center;
-        justify-content: center;
-        padding: 40px;
-      }
-      .modal.open {
-        display: flex;
-      }
-      .mbox {
-        position: relative;
-        width: 100%;
-        max-width: 960px;
-      }
-      .mbox iframe {
-        width: 100%;
-        height: 80vh;
-        border: 0;
-        background: #fff;
-        display: block;
-      }
-      .mclose {
-        position: absolute;
-        top: -40px;
-        right: 0;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: #fff;
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
-        cursor: pointer;
-      }
-      .mclose:hover {
-        border-color: var(--amber);
-        color: var(--amber);
-      }
-      .mcap {
-        margin-top: 12px;
-        font: 11px var(--mono);
-        color: rgba(255, 255, 255, 0.55);
-        text-align: center;
-      }
-      .mcap a {
-        color: var(--amber);
-      }
-      #contact {
-        background: var(--dark);
-        padding: 100px 48px;
-        text-align: center;
-        position: relative;
-      }
-      #contact::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, var(--amber), transparent);
-      }
-      #contact h2 {
-        font-size: clamp(34px, 5vw, 58px);
-        font-weight: 900;
-        letter-spacing: -0.03em;
-        color: #fff;
-        margin-bottom: 16px;
-        line-height: 1;
-      }
-      #contact h2 span {
-        color: var(--amber);
-      }
-      #contact p {
-        font-size: 15px;
-        color: rgba(255, 255, 255, 0.55);
-        max-width: 520px;
-        margin: 0 auto 32px;
-      }
-      .cgrid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-        max-width: 760px;
-        margin: 40px auto 0;
-      }
-      .ct {
-        padding: 22px 16px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        font: 11px/1.5 var(--mono);
-        transition: all 0.2s;
-        overflow-wrap: anywhere;
-      }
-      .ct:hover {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(232, 155, 32, 0.3);
-        color: #fff;
-      }
-      .ct {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-      footer {
-        padding: 20px 48px;
-        background: #070d19;
-        font: 10px var(--mono);
-        letter-spacing: 0.1em;
-        color: rgba(255, 255, 255, 0.3);
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-      }
-      footer span {
-        color: rgba(232, 155, 32, 0.7);
-      }
-      @media (max-width: 1024px) {
-        #hero {
-          grid-template-columns: 1fr;
-        }
-        .hero-r {
-          display: none;
-        }
-        .grid {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-      @media (max-width: 768px) {
-        nav {
-          padding: 0 20px;
-        }
-        .nav-links {
-          display: none;
-        }
-        #hero {
-          padding: 100px 20px 60px;
-        }
-        .sec,
-        #contact {
-          padding: 72px 20px;
-        }
-        .about {
-          grid-template-columns: 1fr;
-          gap: 40px;
-        }
-        .job {
-          grid-template-columns: 1fr;
-          gap: 8px;
-        }
-        .grid,
-        .cgrid {
-          grid-template-columns: 1fr;
-        }
-        footer {
-          flex-direction: column;
-          text-align: center;
-          padding: 20px;
-        }
-        .modal {
-          padding: 16px;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-        * {
-          transition: none !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <nav>
-      <a href="#hero" class="logo"><i></i>HAJRA</a>
-      <div class="nav-r">
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#education">Education</a></li>
-          <li><a href="#awards">Awards</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-        <a href="CV.pdf" download class="nav-cv">Download CV</a>
-      </div>
-    </nav>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hajra — Financial Data Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#f7f6f2;--white:#fff;--dark:#0b1221;--amber:#e89b20;--amber-l:#fef3c7;--blue:#1a47b8;--blue-l:#eff4ff;--text:#111827;--mid:#374151;--muted:#6b7280;--border:#e5e7eb;--font:"Outfit",sans-serif;--mono:"JetBrains Mono",monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;overflow-x:hidden}
+a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+nav{position:fixed;inset:0 0 auto 0;z-index:200;height:64px;background:rgba(247,246,242,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px}
+.logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:.06em;display:flex;align-items:center;gap:10px}
+.logo i{width:8px;height:8px;background:var(--amber);border-radius:50%}
+.nav-r{display:flex;align-items:center;gap:32px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--dark)}
+.nav-cv,.btn{padding:10px 20px;font:700 12px var(--font);letter-spacing:.04em;text-decoration:none;border:1px solid var(--dark);background:var(--dark);color:#fff;transition:all .2s;display:inline-block;cursor:pointer}
+.nav-cv:hover{background:var(--amber);border-color:var(--amber);color:#000}
+#hero{min-height:100vh;background:var(--dark);display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:60px;padding:120px 48px 80px;position:relative;overflow:hidden}
+#hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/36px 36px}
+#hero::after{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),#f59e0b 50%,transparent)}
+.hero-l,.hero-r{position:relative;z-index:1}
+.tag{display:inline-block;padding:6px 14px;background:rgba(232,155,32,.12);border:1px solid rgba(232,155,32,.25);font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:28px}
+.name{font-size:clamp(56px,7vw,104px);font-weight:900;line-height:.95;letter-spacing:-.03em;color:#fff;margin-bottom:14px}
+.name span{color:var(--amber)}
+.role{font-size:clamp(14px,1.4vw,18px);color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px}
+.desc{font-size:15px;color:rgba(255,255,255,.75);line-height:1.75;max-width:560px;margin-bottom:36px}
+.desc strong{color:#fff;font-weight:600}
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-a{background:var(--amber);border-color:var(--amber);color:#000;padding:13px 28px}
+.btn-a:hover{background:#fbbf24;transform:translateY(-2px)}
+.btn-o{background:transparent;border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.85);padding:13px 28px}
+.btn-o:hover{border-color:#fff;color:#fff;transform:translateY(-2px)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:20px 22px}
+.stat b{display:block;font:700 28px var(--mono);color:var(--amber);line-height:1;margin-bottom:6px}
+.stat span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.hc{display:block;padding:12px 16px;margin-bottom:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.65);text-decoration:none;font:11px var(--mono);letter-spacing:.05em;transition:all .2s;overflow-wrap:anywhere}
+.hc:hover{color:#fff;border-color:rgba(232,155,32,.3)}
+.sec{padding:100px 48px}
+.sec.alt{background:var(--white)}
+.eyebrow{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--amber)}
+h2.t{font-size:clamp(30px,4vw,46px);font-weight:800;letter-spacing:-.025em;line-height:1.1;margin-bottom:16px;color:var(--dark)}
+h2.t span{color:var(--blue)}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.prose{font-size:15px;color:var(--mid);line-height:1.8;margin-bottom:18px;max-width:62ch}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:28px}
+.fact{padding:16px 18px;background:var(--bg);border:1px solid var(--border);border-left:3px solid var(--amber)}
+.fact small{display:block;font:9px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.fact b{font-size:14px;color:var(--dark)}
+.sk{margin-bottom:22px}
+.sk h3{font:700 10px var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.pills{display:flex;flex-wrap:wrap;gap:7px}
+.pill{padding:5px 12px;background:var(--white);border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--mid)}
+.pill.hi{border-color:rgba(26,71,184,.3);color:var(--blue);background:var(--blue-l)}
+.exp{margin-top:44px}
+.job{display:grid;grid-template-columns:220px 1fr;gap:40px;padding:34px 0;border-top:1px solid var(--border)}
+.job:last-child{border-bottom:1px solid var(--border)}
+.period{font:500 11px var(--mono);color:var(--amber);letter-spacing:.06em;margin-bottom:6px}
+.org{font-size:13px;font-weight:700;color:var(--dark)}
+.job h3{font-size:20px;font-weight:700;color:var(--dark);letter-spacing:-.01em}
+.job ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.job li{font-size:14px;color:var(--mid);padding-left:18px;position:relative;max-width:70ch}
+.job li::before{content:"—";position:absolute;left:0;color:var(--amber);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+.card{background:var(--white);border:1px solid var(--border);padding:26px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s}
+.card:hover{border-color:var(--amber)}
+.sec.alt .card{background:var(--bg)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.yr{font:10px var(--mono);color:var(--muted);letter-spacing:.1em}
+.dom{font:700 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;background:rgba(232,155,32,.12);border:1px solid rgba(232,155,32,.25);color:#b45309;text-align:right}
+.dom.b{background:var(--blue-l);border-color:rgba(26,71,184,.2);color:var(--blue)}
+.dom.g{background:#f0fdf4;border-color:rgba(16,185,129,.25);color:#065f46}
+.card h3{font-size:17px;font-weight:700;color:var(--dark);line-height:1.3}
+.card p{font-size:13px;color:var(--muted);line-height:1.65;flex:1}
+.media{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;padding:7px 12px;background:var(--white);border:1px solid var(--border);font:600 10.5px var(--mono);color:var(--mid);cursor:pointer;transition:all .18s;margin-top:4px}
+.media:hover{border-color:var(--amber);color:#b45309;background:var(--amber-l)}
+.modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(7,13,25,.92);align-items:center;justify-content:center;padding:40px}
+.modal.open{display:flex}
+.mbox{position:relative;width:100%;max-width:960px}
+.mbox iframe{width:100%;height:80vh;border:0;background:#fff;display:block}
+.mclose{position:absolute;top:-40px;right:0;background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;width:32px;height:32px;font-size:18px;cursor:pointer}
+.mclose:hover{border-color:var(--amber);color:var(--amber)}
+.mcap{margin-top:12px;font:11px var(--mono);color:rgba(255,255,255,.55);text-align:center}
+.mcap a{color:var(--amber)}
+#contact{background:var(--dark);padding:100px 48px;text-align:center;position:relative}
+#contact::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent)}
+#contact h2{font-size:clamp(34px,5vw,58px);font-weight:900;letter-spacing:-.03em;color:#fff;margin-bottom:16px;line-height:1}
+#contact h2 span{color:var(--amber)}
+#contact p{font-size:15px;color:rgba(255,255,255,.55);max-width:520px;margin:0 auto 32px}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:760px;margin:40px auto 0}
+.ct{padding:22px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.7);text-decoration:none;font:11px/1.5 var(--mono);transition:all .2s;overflow-wrap:anywhere}
+.ct:hover{background:rgba(255,255,255,.08);border-color:rgba(232,155,32,.3);color:#fff}
+.ct{display:flex;align-items:center;justify-content:center;text-align:center}
+footer{padding:20px 48px;background:#070d19;font:10px var(--mono);letter-spacing:.1em;color:rgba(255,255,255,.3);display:flex;justify-content:space-between;gap:8px}
+footer span{color:rgba(232,155,32,.7)}
+@media(max-width:1024px){#hero{grid-template-columns:1fr}.hero-r{display:none}.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{padding:0 20px}.nav-links{display:none}#hero{padding:100px 20px 60px}.sec,#contact{padding:72px 20px}.about{grid-template-columns:1fr;gap:40px}.job{grid-template-columns:1fr;gap:8px}.grid,.cgrid{grid-template-columns:1fr}footer{flex-direction:column;text-align:center;padding:20px}.modal{padding:16px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#hero" class="logo"><i></i>HAJRA</a>
+  <div class="nav-r">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="CV.pdf" download class="nav-cv">Download CV</a>
+  </div>
+</nav>
 
-    <section id="hero">
-      <div class="hero-l">
-        <div class="tag">Financial Data Analyst · Lahore</div>
-        <h1 class="name">Hajra<br /><span>Goraya</span></h1>
-        <p class="role">Data Quality Assurance · Risk &amp; Reconciliation</p>
-        <p class="desc">
-          Senior Financial Analyst at <strong>2iQ Research</strong>, verifying
-          insider trading disclosures for hedge funds and asset managers
-          worldwide. Named <strong>Employee of the Year 2025</strong>. Now
-          moving into <strong>AI safety research</strong>, bringing a rule-based
-          approach to data integrity, governance and technical disclosure
-          standards.
-        </p>
-        <div class="btns">
-          <a href="#experience" class="btn btn-a">View Experience</a>
-          <a href="CV.pdf" download class="btn btn-o">Download CV</a>
-          <a
-            href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hajragoraya6@gmail.com"
-            target="_blank"
-            rel="noopener"
-            class="btn btn-o"
-            >Get in Touch</a
-          >
-        </div>
-      </div>
-      <div class="hero-r">
-        <div class="stats">
-          <div class="stat"><b>3+</b><span>Years at 2iQ</span></div>
-          <div class="stat"><b>8</b><span>Markets covered</span></div>
-          <div class="stat"><b>100%</b><span>Feed accuracy target</span></div>
-          <div class="stat"><b>2025</b><span>Employee of the Year</span></div>
-        </div>
-        <a
-          class="hc"
-          href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hajragoraya6@gmail.com"
-          target="_blank"
-          rel="noopener"
-          >hajragoraya6@gmail.com</a
-        >
-        <a
-          class="hc"
-          href="https://www.linkedin.com/in/hajra-goraya-18a751156"
-          target="_blank"
-          rel="noopener"
-          >LinkedIn</a
-        >
-        <a class="hc" href="tel:+923174357062">+92 317 4357062</a>
-      </div>
-    </section>
-
-    <section id="about" class="sec alt about">
-      <div>
-        <div class="eyebrow">About</div>
-        <h2 class="t">Accuracy that <span>institutions rely on</span></h2>
-        <p class="prose">
-          I verify financial data for a living. My team’s clients, among them
-          hedge funds, asset managers and investment banks, trade on what we
-          publish, so every insider filing, block trade and corporate action has
-          to be right.
-        </p>
-        <p class="prose">
-          I also watch the automated bots that capture this data, catching
-          scraping errors, misaligned fields and failed ingestion before they
-          reach a client. That mix of high-volume checking and rule-based
-          governance is what I now want to apply to AI safety research:
-          governance frameworks, third-party model examination and technical
-          disclosure standards.
-        </p>
-        <div class="facts">
-          <div class="fact"><small>Location</small><b>Lahore, Pakistan</b></div>
-          <div class="fact">
-            <small>Current role</small><b>Senior Financial Analyst</b>
-          </div>
-          <div class="fact">
-            <small>Degree</small><b>MBA, Banking &amp; Finance</b>
-          </div>
-          <div class="fact">
-            <small>Target focus</small><b>AI Governance</b>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="sk">
-          <h3>Financial data &amp; compliance</h3>
-          <div class="pills">
-            <span class="pill hi">Insider Disclosures Analysis</span
-            ><span class="pill hi">Corporate Actions Processing</span
-            ><span class="pill">Ownership Reconciliation</span
-            ><span class="pill"
-              >Regulatory Filings (SEC, AGM, Annual Reports)</span
-            ><span class="pill">Multi-Market Data Verification</span>
-          </div>
-        </div>
-        <div class="sk">
-          <h3>Analytical &amp; risk methods</h3>
-          <div class="pills">
-            <span class="pill hi">Data Governance &amp; QA</span
-            ><span class="pill">Financial Risk Assessment</span
-            ><span class="pill">Trend Analysis</span
-            ><span class="pill">Forecasting</span
-            ><span class="pill">Empirical Research</span>
-          </div>
-        </div>
-        <div class="sk">
-          <h3>Software &amp; systems</h3>
-          <div class="pills">
-            <span class="pill hi">Advanced MS Excel</span
-            ><span class="pill hi">SAP S/4 HANA (FI)</span
-            ><span class="pill">Proprietary Financial Databases</span
-            ><span class="pill">AI Task Automation</span>
-          </div>
-        </div>
-        <div class="sk">
-          <h3>Geographic coverage</h3>
-          <div class="pills">
-            <span class="pill">USA</span><span class="pill">Canada</span
-            ><span class="pill">Hong Kong</span
-            ><span class="pill">South Korea</span><span class="pill">Japan</span
-            ><span class="pill">Malaysia</span
-            ><span class="pill">Indonesia</span><span class="pill">Brazil</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience" class="sec">
-      <div class="eyebrow">Experience</div>
-      <h2 class="t">Three years, <span>one team, rising scope</span></h2>
-      <div class="exp">
-        <div class="job">
-          <div>
-            <div class="period">Jan 2025 – Present</div>
-            <div class="org">2iQ Research, Lahore</div>
-          </div>
-          <div>
-            <h3>Senior Financial Analyst</h3>
-            <ul>
-              <li>
-                Lead daily validation of insider trading disclosures across
-                global public exchanges, keeping institutional client feeds 100%
-                accurate.
-              </li>
-              <li>
-                Monitor the proprietary software bots that capture high-volume
-                transaction data, and identify scraping errors, field
-                misalignments and ingestion failures.
-              </li>
-              <li>
-                Analyze corporate actions, market trades, private block trades
-                and event-driven M&amp;A activity to build reliable financial
-                datasets.
-              </li>
-              <li>
-                Generate quantitative investment ideas and trading signals used
-                by hedge funds, asset managers and investment banks.
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="job">
-          <div>
-            <div class="period">Jul 2023 – Dec 2024</div>
-            <div class="org">2iQ Research, Lahore</div>
-          </div>
-          <div>
-            <h3>Financial Data Analyst</h3>
-            <ul>
-              <li>
-                Evaluated regional market trade data and insider filings to
-                build structured databases for corporate governance analysis.
-              </li>
-              <li>
-                Worked with technical teams to refine bot scraping rules and
-                improve data ingestion pipelines.
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="job">
-          <div>
-            <div class="period">Jan 2023 – Jun 2023</div>
-            <div class="org">2iQ Research, Lahore</div>
-          </div>
-          <div>
-            <h3>Trainee Analyst</h3>
-            <ul>
-              <li>
-                Trained in financial market disclosures, insider transaction
-                categorization and automated data entry verification.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="education" class="sec alt">
-      <div class="eyebrow">Education &amp; Certification</div>
-      <h2 class="t">Finance <span>foundations</span></h2>
-      <div class="grid" id="edu"></div>
-    </section>
-
-    <section id="awards" class="sec">
-      <div class="eyebrow">Awards &amp; Achievements</div>
-      <h2 class="t">Recognition, <span>on record</span></h2>
-      <div class="grid" id="awd"></div>
-    </section>
-
-    <section id="contact">
-      <h2>Let’s <span>connect</span></h2>
-      <p>
-        Open to senior data analyst roles in financial data quality, risk and
-        reconciliation, and to AI governance and safety research positions.
-      </p>
-      <a href="CV.pdf" download class="btn btn-a">Download CV (PDF)</a>
-      <div class="cgrid">
-        <a
-          class="ct"
-          href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hajragoraya6@gmail.com"
-          target="_blank"
-          rel="noopener"
-          >hajragoraya6@gmail.com</a
-        >
-        <a
-          class="ct"
-          href="https://www.linkedin.com/in/hajra-goraya-18a751156"
-          target="_blank"
-          rel="noopener"
-          >LinkedIn</a
-        >
-        <a class="ct" href="tel:+923174357062"
-          >+92 317 4357062<br />Lahore, Pakistan</a
-        >
-      </div>
-    </section>
-
-    <footer>
-      <span>© 2026 <span>Hajra</span> · Lahore, Pakistan</span
-      ><span>Hosted on GitHub Pages</span>
-    </footer>
-
-    <div
-      class="modal"
-      id="modal"
-      onclick="if (event.target === this) closeDoc();"
-    >
-      <div class="mbox">
-        <button class="mclose" onclick="closeDoc()" aria-label="Close">
-          &times;
-        </button>
-        <div id="mbody"></div>
-        <div class="mcap" id="mcap"></div>
-      </div>
+<section id="hero">
+  <div class="hero-l">
+    <div class="tag">Financial Data Analyst · Lahore</div>
+    <h1 class="name">Hajra<br /><span>Goraya</span></h1>
+    <p class="role">Data Quality Assurance · Risk &amp; Reconciliation</p>
+    <p class="desc">Senior Financial Analyst at <strong>2iQ Research</strong>, verifying insider trading disclosures for hedge funds and asset managers worldwide. Named <strong>Employee of the Year 2025</strong>. Now moving into <strong>AI safety research</strong>, bringing a rule-based approach to data integrity, governance and technical disclosure standards.</p>
+    <div class="btns">
+      <a href="#experience" class="btn btn-a">View Experience</a>
+      <a href="CV.pdf" download class="btn btn-o">Download CV</a>
+      <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hajragoraya6@gmail.com" target="_blank" rel="noopener" class="btn btn-o">Get in Touch</a>
     </div>
+  </div>
+  <div class="hero-r">
+    <div class="stats">
+      <div class="stat"><b>3+</b><span>Years at 2iQ</span></div>
+      <div class="stat"><b>8</b><span>Markets covered</span></div>
+      <div class="stat"><b>100%</b><span>Feed accuracy target</span></div>
+      <div class="stat"><b>2025</b><span>Employee of the Year</span></div>
+    </div>
+    <a class="hc" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hajragoraya6@gmail.com" target="_blank" rel="noopener">hajragoraya6@gmail.com</a>
+    <a class="hc" href="https://www.linkedin.com/in/hajra-goraya-18a751156" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="hc" href="tel:+923174357062">+92 317 4357062</a>
+  </div>
+</section>
 
-    <script>
-      const EDU = [
-        {
-          y: "MBA",
-          d: "Degree",
-          t: "MBA, Banking & Finance",
-          p: "Hailey College of Banking & Finance, University of the Punjab. CGPA 3.44 / 4.00, covering financial evaluation, banking operations and risk management.",
-          f: "hcbf-degree.pdf",
-        },
-        {
-          y: "BBA (Hons)",
-          d: "Degree",
-          t: "BBA, Finance",
-          p: "UVAS Business School, University of Veterinary and Animal Sciences. CGPA 3.33 / 4.00, with a base in financial analysis and business strategy.",
-          f: "uvas-degree.pdf",
-        },
-        {
-          y: "2018",
-          d: "Certification",
-          t: "SAP S/4 HANA FI Module",
-          p: "Excellence Delivered (ExD), under the Prime Minister’s Hunarmand Pakistan Program. Hands-on training in financial accounting, ledger workflows and enterprise data control.",
-          f: "sap-certificate.pdf",
-        },
-      ];
-      const AWD = [
-        {
-          y: "2025",
-          d: "Workplace",
-          c: "",
-          t: "Employee of the Year, 2iQ Research",
-          p: "The company’s highest distinction, awarded by the HOD and CEO for analytical precision, initiative, teamwork and systemic error reduction in global financial data validation.",
-          f: "best-employee-award.pdf",
-        },
-        {
-          y: "2019",
-          d: "Innovation",
-          c: "b",
-          t: "DUHS-DICE Health Innovation Exhibition",
-          p: "Presented “Mualej,” a healthcare innovation project, at the 5th All Pakistan exhibition at Expo Centre, Karachi, against teams from across the country.",
-          f: "dice-2019.pdf",
-        },
-        {
-          y: "2018",
-          d: "Innovation",
-          c: "b",
-          t: "DICE Mega Innovation Event",
-          p: "Showcased a technology-driven project at Sukkur IBA University on a national platform for entrepreneurship and technological development.",
-          f: "dice-2018.pdf",
-        },
-        {
-          y: "2018",
-          d: "Research",
-          c: "b",
-          t: "UVAS Science Competition",
-          p: "Recognized by the Office of Research, Innovation and Commercialization (ORIC) at UVAS for research and idea generation.",
-          f: "uvas-science-competition.pdf",
-        },
-        {
-          y: "2019",
-          d: "Leadership",
-          c: "g",
-          t: "2nd Position, 9th UVAS Spring Festival",
-          p: "Placed second at the university festival while serving on the campus event management and decor teams.",
-          f: "uvas-spring-festival.pdf",
-        },
-      ];
-      const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-      const render = (id, list) =>
-        (document.getElementById(id).innerHTML = list
-          .map(
-            (i) =>
-              `<div class="card"><div class="top"><span class="yr">${i.y}</span><span class="dom ${i.c || ""}">${i.d}</span></div>
+<section id="about" class="sec alt about">
+  <div>
+    <div class="eyebrow">About</div>
+    <h2 class="t">Accuracy that <span>institutions rely on</span></h2>
+    <p class="prose">I verify financial data for a living. My team’s clients, among them hedge funds, asset managers and investment banks, trade on what we publish, so every insider filing, block trade and corporate action has to be right.</p>
+    <p class="prose">I also watch the automated bots that capture this data, catching scraping errors, misaligned fields and failed ingestion before they reach a client. That mix of high-volume checking and rule-based governance is what I now want to apply to AI safety research: governance frameworks, third-party model examination and technical disclosure standards.</p>
+    <div class="facts">
+      <div class="fact"><small>Location</small><b>Lahore, Pakistan</b></div>
+      <div class="fact"><small>Current role</small><b>Senior Financial Analyst</b></div>
+      <div class="fact"><small>Degree</small><b>MBA, Banking &amp; Finance</b></div>
+      <div class="fact"><small>Target focus</small><b>AI Governance</b></div>
+    </div>
+  </div>
+  <div>
+    <div class="sk"><h3>Financial data &amp; compliance</h3><div class="pills"><span class="pill hi">Insider Disclosures Analysis</span><span class="pill hi">Corporate Actions Processing</span><span class="pill">Ownership Reconciliation</span><span class="pill">Regulatory Filings (SEC, AGM, Annual Reports)</span><span class="pill">Multi-Market Data Verification</span></div></div>
+    <div class="sk"><h3>Analytical &amp; risk methods</h3><div class="pills"><span class="pill hi">Data Governance &amp; QA</span><span class="pill">Financial Risk Assessment</span><span class="pill">Trend Analysis</span><span class="pill">Forecasting</span><span class="pill">Empirical Research</span></div></div>
+    <div class="sk"><h3>Software &amp; systems</h3><div class="pills"><span class="pill hi">Advanced MS Excel</span><span class="pill hi">SAP S/4 HANA (FI)</span><span class="pill">Proprietary Financial Databases</span><span class="pill">AI Task Automation</span></div></div>
+    <div class="sk"><h3>Geographic coverage</h3><div class="pills"><span class="pill">USA</span><span class="pill">Canada</span><span class="pill">Hong Kong</span><span class="pill">South Korea</span><span class="pill">Japan</span><span class="pill">Malaysia</span><span class="pill">Indonesia</span><span class="pill">Brazil</span></div></div>
+  </div>
+</section>
+
+<section id="experience" class="sec">
+  <div class="eyebrow">Experience</div>
+  <h2 class="t">Three years, <span>one team, rising scope</span></h2>
+  <div class="exp">
+    <div class="job">
+      <div><div class="period">Jan 2025 – Present</div><div class="org">2iQ Research, Lahore</div></div>
+      <div><h3>Senior Financial Analyst</h3><ul>
+        <li>Lead daily validation of insider trading disclosures across global public exchanges, keeping institutional client feeds 100% accurate.</li>
+        <li>Monitor the proprietary software bots that capture high-volume transaction data, and identify scraping errors, field misalignments and ingestion failures.</li>
+        <li>Analyze corporate actions, market trades, private block trades and event-driven M&amp;A activity to build reliable financial datasets.</li>
+        <li>Generate quantitative investment ideas and trading signals used by hedge funds, asset managers and investment banks.</li></ul></div>
+    </div>
+    <div class="job">
+      <div><div class="period">Jul 2023 – Dec 2024</div><div class="org">2iQ Research, Lahore</div></div>
+      <div><h3>Financial Data Analyst</h3><ul>
+        <li>Evaluated regional market trade data and insider filings to build structured databases for corporate governance analysis.</li>
+        <li>Worked with technical teams to refine bot scraping rules and improve data ingestion pipelines.</li></ul></div>
+    </div>
+    <div class="job">
+      <div><div class="period">Jan 2023 – Jun 2023</div><div class="org">2iQ Research, Lahore</div></div>
+      <div><h3>Trainee Analyst</h3><ul>
+        <li>Trained in financial market disclosures, insider transaction categorization and automated data entry verification.</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="sec alt">
+  <div class="eyebrow">Education &amp; Certification</div>
+  <h2 class="t">Finance <span>foundations</span></h2>
+  <div class="grid" id="edu"></div>
+</section>
+
+<section id="awards" class="sec">
+  <div class="eyebrow">Awards &amp; Achievements</div>
+  <h2 class="t">Recognition, <span>on record</span></h2>
+  <div class="grid" id="awd"></div>
+</section>
+
+<section id="contact">
+  <h2>Let’s <span>connect</span></h2>
+  <p>Open to senior data analyst roles in financial data quality, risk and reconciliation, and to AI governance and safety research positions.</p>
+  <a href="CV.pdf" download class="btn btn-a">Download CV (PDF)</a>
+  <div class="cgrid">
+    <a class="ct" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hajragoraya6@gmail.com" target="_blank" rel="noopener">hajragoraya6@gmail.com</a>
+    <a class="ct" href="https://www.linkedin.com/in/hajra-goraya-18a751156" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="ct" href="tel:+923174357062">+92 317 4357062<br />Lahore, Pakistan</a>
+  </div>
+</section>
+
+<footer><span>© 2026 <span>Hajra</span> · Lahore, Pakistan</span><span>Hosted on GitHub Pages</span></footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeDoc()">
+  <div class="mbox">
+    <button class="mclose" onclick="closeDoc()" aria-label="Close">&times;</button>
+    <div id="mbody"></div>
+    <div class="mcap" id="mcap"></div>
+  </div>
+</div>
+
+<script>
+const EDU = [
+  {y:"MBA", d:"Degree", t:"MBA, Banking & Finance", p:"Hailey College of Banking & Finance, University of the Punjab. CGPA 3.44 / 4.00, covering financial evaluation, banking operations and risk management.", f:"hcbf-degree.pdf"},
+  {y:"BBA (Hons)", d:"Degree", t:"BBA, Finance", p:"UVAS Business School, University of Veterinary and Animal Sciences. CGPA 3.33 / 4.00, with a base in financial analysis and business strategy.", f:"uvas-degree.pdf"},
+  {y:"2018", d:"Certification", t:"SAP S/4 HANA FI Module", p:"Excellence Delivered (ExD), under the Prime Minister’s Hunarmand Pakistan Program. Hands-on training in financial accounting, ledger workflows and enterprise data control.", f:"sap-certificate.pdf"}
+];
+const AWD = [
+  {y:"2025", d:"Workplace", c:"", t:"Employee of the Year, 2iQ Research", p:"The company’s highest distinction, awarded by the HOD and CEO for analytical precision, initiative, teamwork and systemic error reduction in global financial data validation.", f:"best-employee-award.pdf"},
+  {y:"2019", d:"Innovation", c:"b", t:"DUHS-DICE Health Innovation Exhibition", p:"Presented “Mualej,” a healthcare innovation project, at the 5th All Pakistan exhibition at Expo Centre, Karachi, against teams from across the country.", f:"dice-2019.pdf"},
+  {y:"2018", d:"Innovation", c:"b", t:"DICE Mega Innovation Event", p:"Showcased a technology-driven project at Sukkur IBA University on a national platform for entrepreneurship and technological development.", f:"dice-2018.pdf"},
+  {y:"2018", d:"Research", c:"b", t:"UVAS Science Competition", p:"Recognized by the Office of Research, Innovation and Commercialization (ORIC) at UVAS for research and idea generation.", f:"uvas-science-competition.pdf"},
+  {y:"2019", d:"Leadership", c:"g", t:"2nd Position, 9th UVAS Spring Festival", p:"Placed second at the university festival while serving on the campus event management and decor teams.", f:"uvas-spring-festival.pdf"}
+];
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const render = (id, list) => document.getElementById(id).innerHTML = list.map(i =>
+  `<div class="card"><div class="top"><span class="yr">${i.y}</span><span class="dom ${i.c||""}">${i.d}</span></div>
    <h3>${esc(i.t)}</h3><p>${esc(i.p)}</p>
-   <button class="media" onclick="openDoc('${i.f}','${esc(i.t).replace(/'/g, "&#39;")}')">View document</button></div>`,
-          )
-          .join(""));
-      render("edu", EDU);
-      render("awd", AWD);
+   <button class="media" onclick="openDoc('${i.f}','${esc(i.t).replace(/'/g,"&#39;")}')">View document</button></div>`).join("");
+render("edu", EDU); render("awd", AWD);
 
-      function openDoc(src, cap) {
-        document.getElementById("mbody").innerHTML =
-          `<iframe src="${src}" title="${cap}"></iframe>`;
-        document.getElementById("mcap").innerHTML =
-          `${cap} · <a href="${src}" target="_blank" rel="noopener">Open in new tab</a>`;
-        document.getElementById("modal").classList.add("open");
-      }
-      function closeDoc() {
-        document.getElementById("modal").classList.remove("open");
-        document.getElementById("mbody").innerHTML = "";
-      }
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeDoc();
-      });
-    </script>
-  </body>
+function openDoc(src, cap){
+  document.getElementById("mbody").innerHTML = `<iframe src="${src}" title="${cap}"></iframe>`;
+  document.getElementById("mcap").innerHTML = `${cap} · <a href="${src}" target="_blank" rel="noopener">Open in new tab</a>`;
+  document.getElementById("modal").classList.add("open");
+}
+function closeDoc(){
+  document.getElementById("modal").classList.remove("open");
+  document.getElementById("mbody").innerHTML = "";
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDoc(); });
+</script>
+</body>
 </html>
