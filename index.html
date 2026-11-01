@@ -686,7 +686,7 @@
           <li><a href="#awards">Awards</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
-        <a href="docs/CV.pdf" download class="nav-cv">Download CV</a>
+        <a href="CV.pdf" download class="nav-cv">Download CV</a>
       </div>
     </nav>
 
@@ -705,7 +705,7 @@
         </p>
         <div class="btns">
           <a href="#experience" class="btn btn-a">View Experience</a>
-          <a href="docs/CV.pdf" download class="btn btn-o">Download CV</a>
+          <a href="CV.pdf" download class="btn btn-o">Download CV</a>
           <a
             href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hajragoraya6@gmail.com"
             target="_blank"
@@ -904,7 +904,7 @@
         Open to senior data analyst roles in financial data quality, risk and
         reconciliation, and to AI governance and safety research positions.
       </p>
-      <a href="docs/CV.pdf" download class="btn btn-a">Download CV (PDF)</a>
+      <a href="CV.pdf" download class="btn btn-a">Download CV (PDF)</a>
       <div class="cgrid">
         <a
           class="ct"
@@ -1018,7 +1018,7 @@
             (i) =>
               `<div class="card"><div class="top"><span class="yr">${i.y}</span><span class="dom ${i.c || ""}">${i.d}</span></div>
    <h3>${esc(i.t)}</h3><p>${esc(i.p)}</p>
-   <button class="media" onclick="openDoc('docs/${i.f}','${esc(i.t).replace(/'/g, "&#39;")}')">View document</button></div>`,
+   <button class="media" onclick="openDoc('${i.f}','${esc(i.t).replace(/'/g, "&#39;")}')">View document</button></div>`,
           )
           .join(""));
       render("edu", EDU);
